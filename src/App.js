@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+ 
 import './App.css';
+import Info from './component/Info/Info';
+import User from './component/Info/user/User';
+import Cart from './component/Info/user/cart/Cart';
 
 function App() {
+const [users, setUsers] = useState([]);
+  
+ console.log(users)
+
+useEffect(() => {
+   fetch('https://randomuser.me/api?results=16')
+   .then(res => res.json())
+   .then(data =>  setUsers(data.results))
+   
+}, [])
+ const divStyle = {
+  textAlign:"center" 
+ }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+     
+    <div style={divStyle}>
+         
+          <h2>Users Information</h2>
+        <ul>
+          {
+            users.map(user =><Cart user={user}></Cart>)
+          }
+        
+        </ul>
+   </div>
+   
+      
+     
   );
 }
 
